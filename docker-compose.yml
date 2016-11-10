@@ -1,0 +1,110 @@
+version: "2"
+services:
+  mysql:
+    container_name: mysql
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=keepasecret
+      - MYSQL_USER=druid
+      - MYSQL_PASSWORD=keepasecret
+      - MYSQL_DATABASE=druid
+    command:
+      - '--character-set-server=utf8'
+      - '--collation-server=utf8_unicode_ci'
+
+  zookeeper:
+    container_name: zookeeper
+    image: zookeeper
+    environment:
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=zookeeper
+
+  coordinator:
+    image: cima/druid-base
+    ports:
+      - "3001:8081"
+    environment:
+      - DRUID_XMX=1g
+      - DRUID_XMS=1g
+      - DRUID_MAXNEWSIZE=250m
+      - DRUID_NEWSIZE=250m
+      - MYSQL_USERNAME=druid
+      - MYSQL_PASSWORD=keepasecret
+      - S3_STORAGE_BUCKET=your-deep-storage-bucket-goes-here
+      - S3_STORAGE_BUCKET=your-index-log-bucket-goes-here
+      - S3_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXX
+      - S3_SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    command:
+      - coordinator
+
+  broker:
+    image: cima/druid-base
+    ports:
+      - "3002:8082"
+    environment:
+      - DRUID_XMX=1g
+      - DRUID_XMS=1g
+      - DRUID_MAXNEWSIZE=250m
+      - DRUID_NEWSIZE=250m
+      - MYSQL_USERNAME=druid
+      - MYSQL_PASSWORD=keepasecret
+      - S3_STORAGE_BUCKET=your-deep-storage-bucket-goes-here
+      - S3_STORAGE_BUCKET=your-index-log-bucket-goes-here
+      - S3_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXX
+      - S3_SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    command:
+      - broker
+
+  historical:
+    image: cima/druid-base
+    ports:
+      - "3003:8083"
+    environment:
+      - DRUID_XMX=1g
+      - DRUID_XMS=1g
+      - DRUID_MAXNEWSIZE=250m
+      - DRUID_NEWSIZE=250m
+      - MYSQL_USERNAME=druid
+      - MYSQL_PASSWORD=keepasecret
+      - S3_STORAGE_BUCKET=your-deep-storage-bucket-goes-here
+      - S3_STORAGE_BUCKET=your-index-log-bucket-goes-here
+      - S3_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXX
+      - S3_SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    command:
+      - historical
+
+  overlord:
+    image: cima/druid-base
+    ports:
+      - "4000:8090"
+    environment:
+      - DRUID_XMX=1g
+      - DRUID_XMS=1g
+      - DRUID_MAXNEWSIZE=250m
+      - DRUID_NEWSIZE=250m
+      - MYSQL_USERNAME=druid
+      - MYSQL_PASSWORD=keepasecret
+      - S3_STORAGE_BUCKET=your-deep-storage-bucket-goes-here
+      - S3_STORAGE_BUCKET=your-index-log-bucket-goes-here
+      - S3_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXX
+      - S3_SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    command:
+      - overlord
+
+  middlemanager:
+    image: cima/druid-base
+    ports:
+      - "4001:8091"
+    environment:
+      - DRUID_XMX=1g
+      - DRUID_XMS=1g
+      - DRUID_MAXNEWSIZE=250m
+      - DRUID_NEWSIZE=250m
+      - MYSQL_USERNAME=druid
+      - MYSQL_PASSWORD=keepasecret
+      - S3_STORAGE_BUCKET=your-deep-storage-bucket-goes-here
+      - S3_STORAGE_BUCKET=your-index-log-bucket-goes-here
+      - S3_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXX
+      - S3_SECRET_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    command:
+      - middleManager
