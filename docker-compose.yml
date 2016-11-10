@@ -20,7 +20,7 @@ services:
       - ZOO_SERVERS=zookeeper
 
   coordinator:
-    image: cima/druid-base
+    image: cima/druid
     ports:
       - "3001:8081"
     environment:
@@ -38,7 +38,7 @@ services:
       - coordinator
 
   broker:
-    image: cima/druid-base
+    image: cima/druid
     ports:
       - "3002:8082"
     environment:
@@ -56,7 +56,7 @@ services:
       - broker
 
   historical:
-    image: cima/druid-base
+    image: cima/druid
     ports:
       - "3003:8083"
     environment:
@@ -74,7 +74,7 @@ services:
       - historical
 
   overlord:
-    image: cima/druid-base
+    image: cima/druid
     ports:
       - "4000:8090"
     environment:
@@ -92,7 +92,7 @@ services:
       - overlord
 
   middlemanager:
-    image: cima/druid-base
+    image: cima/druid
     ports:
       - "4001:8091"
     environment:
