@@ -16,7 +16,7 @@ sed -ri 's/druid.metadata.storage.connector.password.*/druid.metadata.storage.co
 sed -ri 's/druid.s3.accessKey.*/druid.s3.accessKey='${S3_ACCESS_KEY}'/g' /opt/druid/conf/druid/_common/common.runtime.properties
 sed -ri 's/druid.s3.secretKey.*/druid.s3.secretKey='${S3_SECRET_KEY}'/g' /opt/druid/conf/druid/_common/common.runtime.properties
 sed -ri 's/druid.storage.bucket.*/druid.storage.bucket='${S3_STORAGE_BUCKET}'/g' /opt/druid/conf/druid/_common/common.runtime.properties
-sed -ri 's/druid.indexing.bucket.*/druid.indexing.bucket='${S3_INDEXING_BUCKET}'/g' /opt/druid/conf/druid/_common/common.runtime.properties
+sed -ri 's/druid.indexer.logs.s3Bucket.*/druid.indexer.logs.s3Bucket='${S3_INDEXING_BUCKET}'/g' /opt/druid/conf/druid/_common/common.runtime.properties
 
 if [ "$DRUID_XMX" != "-" ]; then
     sed -ri 's/Xmx.*/Xmx'${DRUID_XMX}'/g' /opt/druid/conf/druid/$1/jvm.config
